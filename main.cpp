@@ -43,7 +43,6 @@ GLfloat Ambient[13][4] ={
     0.19125,  0.0735,   0.0225,  1.0,
     0.24725,  0.1995,   0.0745,    1.0,
     0.19225,  0.19225,  0.19225, 1.0,
-   // 0.0,    0.0,    0.0,  1.0,
     0.0,   0.1,    0.06,    1.0,
 };
 
@@ -59,12 +58,11 @@ GLfloat Diffuse [13][4] ={
     0.4,     0.4,      0.4,      1.0,
     0.7038,   0.27048,  0.0828,  1.0,
     0.75164,  0.60648,  0.22648,   1.0,
- //   0.50754,  0.50754,  0.50754, 1.0,
     0.01,   0.01,   0.01, 1.0,
 0.0,   0.50980392,0.50980392,1.0,
 };
 GLfloat Specular[13][4] ={
-    
+
     0.633,   0.727811, 0.633,   1.0,
     0.316228,  0.316228, 0.316228, 1.0,
     0.332741,0.328634,0.346435,1.0,
@@ -77,7 +75,6 @@ GLfloat Specular[13][4] ={
     0.256777, 0.137622, 0.086014,1.0,
     0.628281, 0.555802, 0.366065,  1.0,
     0.508273, 0.508273, 0.508273,1.0,
- //   0.50,   0.50,   0.50, 1.0,
     0.50196078,0.50196078,0.50196078,1.0,
 
 };
@@ -98,7 +95,7 @@ GLfloat Shininess[13][1] = {
 };
 
 float Vertex[m*n][8] = {
-    
+
 };
 
 void initVertex(){
@@ -115,14 +112,14 @@ void initVertex(){
                 Vertex[counter][6]=i;
                 Vertex[counter][7]=j+1;
                 counter++;
-            
+
             }
         }
     }
 }
 
 void ground(){
-   
+
     glDisable(GL_LIGHTING);
     for(int i =0 ; i< m*n; i++){
         glPushMatrix();
@@ -131,7 +128,7 @@ void ground(){
             glColor3f(1,1,1);   //white
         else
             glColor3f(0.5,0.5,0.5);
-        
+
         glVertex3f( Vertex[i][0], Y, Vertex[i][1]);
         glVertex3f( Vertex[i][2], Y, Vertex[i][3]);
         glVertex3f( Vertex[i][4], Y, Vertex[i][5]);
@@ -148,7 +145,7 @@ void drawBall(){
 void drawline(float X_start,float Y_start , float X_end, float Y_end){
     glDisable(GL_LIGHTING);
     glPushMatrix();
-   
+
     glColor3f( 1,1,1 );
     glBegin(GL_LINES);
     glVertex3f(X_start, Y_start, 0.0);
@@ -250,7 +247,7 @@ void paye(){
     glVertex3f(-(m-(4*numberBall))/2 -1, Y-2, 1.0);
     glEnd();
     glPopMatrix();
-    
+
     //PAYE KENARI 2
     //1
     glPushMatrix();
@@ -287,22 +284,22 @@ void paye(){
 void drawBalls(){
     glDisable(GL_LIGHTING);
    glTranslated((m-(4*numberBall))/2 + 2, Y+n/10, n/2);
-    
+
     paye();
-    
+
     for( int i =0 ; i< numberBall ; i++){
         glPushMatrix();
       if (i == numberBall - 1) {
            if (TURN_Ball_2 == true) {
                if (Turn_Back_Ball_2 == 0) { timer1 += v2; v2+=0.0001; }
                 else  {timer1 -= v2;  v2-=0.0001;}
-               
+
                 if (timer1 > 1.6) {Turn_Back_Ball_2 = 1;  v2=0.01; TURN_Ball_2 = false;}
                 if (timer1 < 1) {   Turn_Back_Ball_2 = 0;   v2=0.01;}
 
                 X_Ball2 = r*cos(-timer1);
                 Y_Ball2 = r + r*sin(-timer1);
-                
+
                 glPushMatrix();
                 glTranslatef(3*i, 0, 0);
                  drawline(i, r, X_Ball2+i, Y_Ball2);
@@ -322,15 +319,15 @@ void drawBalls(){
                 else{   timer2 -= v1;   v1-=0.0001;}
                 if (timer2 > 1.6) { Turn_Back_Ball_1 = 1; v1=0.01; TURN_Ball_2 = true;  }
                 if (timer2 < 1) { Turn_Back_Ball_1 = 0; v1=0.01;}
-                
+
                 X_Ball1 = -r*cos(-timer2);
                 Y_Ball1= r + r*sin(-timer2);
-               
+
                 glPushMatrix();
                 drawline(i, r, X_Ball1, Y_Ball1);
                 glPopMatrix();
                 glTranslatef(X_Ball1, Y_Ball1, 0);
-               
+
            }
            else {
                 glPushMatrix();
@@ -340,12 +337,12 @@ void drawBalls(){
             }
         }
         else {
-   
+
         glPushMatrix();
             glTranslatef(3*i, 0, 0);
               drawline(i, r, i, 0);
         glPopMatrix();
-            
+
       }
          glTranslatef(4*i, 0, 0);
         glMaterialfv(GL_FRONT, GL_AMBIENT,  Ambient[i]);
@@ -354,7 +351,7 @@ void drawBalls(){
         glMaterialfv(GL_FRONT, GL_SHININESS,  Shininess[i]);
         drawBall();
         glPopMatrix();
-        
+
     }
   }
 void objs( )
@@ -373,7 +370,7 @@ void display( )
 {
 
     GLint buffers = GL_NONE;
-    
+
     glPushMatrix();
     glTranslatef(0,0,z);
     glGetIntegerv( GL_DRAW_BUFFER, &buffers );
@@ -381,31 +378,31 @@ void display( )
     glRotatef( d1, 0, 1, 0);
     glTranslated(-m / 2, -Y - 3, 0);
     glRotatef(d2, 1, 0, 0);
-  
-    
+
+
     glClearStencil( 0x0 );
     glClear( GL_STENCIL_BUFFER_BIT );
     glStencilFunc(GL_ALWAYS, 0x1, 0x1 );
     glStencilOp( GL_REPLACE, GL_REPLACE, GL_REPLACE );
     glDrawBuffer( GL_NONE );
     glEnable( GL_STENCIL_TEST );
-    
+
     glBegin( GL_QUADS );
     glVertex3f( 0 , Y , 0 );
     glVertex3f( m , Y , 0 );
     glVertex3f( m , Y+n/3 , 0 );
     glVertex3f( 0 , Y+n/3, 0 );
     glEnd();
-    
+
     glDrawBuffer( (GLenum) buffers );
     glStencilOp( GL_KEEP, GL_KEEP, GL_KEEP );
-    
-    
+
+
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-    
+
     glPushMatrix();
     glScalef( 1 , 1 , -1 );
-    
+
     if( (cos( d1 * PI / 180.0 ) < 0.0)  || (cos( d1 * PI / 180.0 ) < 0.0 ) )
     {
         mnor[2] = -1.0;
@@ -417,18 +414,18 @@ void display( )
 
     glClipPlane( GL_CLIP_PLANE0 , mnor );
     glEnable( GL_CLIP_PLANE0 );
-    
+
     glStencilFunc( GL_EQUAL , 0x1 , 0x1 );
-    
+
     // draw real objects
     objs();
-    
+
     glDisable( GL_CLIP_PLANE0 );
     glPopMatrix( );
-    
+
     glDisable( GL_STENCIL_TEST );
     glDrawBuffer( GL_NONE );
-    
+
     // draw the mirror pane into depth buffer -
     // to prevent object behind mirror from being render
     glBegin( GL_QUADS );
@@ -437,24 +434,24 @@ void display( )
     glVertex3f( m , Y+n/3 , 0 );
     glVertex3f( 0 , Y+n/3, 0 );
     glEnd();
-    
+
     // enable drawing to the color buffer
     glDrawBuffer( (GLenum) buffers );
-    
+
     // draw Objects in the mirror
     glPushMatrix( );
     objs();
     glPopMatrix( );
-    
+
     // mirror shine
     glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
     glEnable( GL_BLEND );
     glDepthMask( GL_FALSE );
     glDepthFunc( GL_LEQUAL );
     glDisable( GL_LIGHTING );
-    
-    
-    
+
+
+
     //JIVE
     glColor4f( 1 , 1 , 1 , 0.1 );
     glTranslatef( 0.0f, 0.0f, 0.001f * mnor[2] );
@@ -464,14 +461,14 @@ void display( )
     glVertex3f( m , Y+n/3 , 0 );
     glVertex3f( 0 , Y+n/3, 0 );
     glEnd( );
-    
+
     glDisable( GL_BLEND );
     glDepthMask( GL_TRUE );
     glDepthFunc( GL_LESS );
     glEnable( GL_LIGHTING );
-    
+
     glPopMatrix( );
-    
+
     glFlush( );
     glutSwapBuffers( );
 }
@@ -487,7 +484,7 @@ void init()
     glFrontFace( GL_CCW );
     glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
     glLineWidth(3 );
-    
+
     GLfloat light_position[] = { 5,5,5, 0.0 };
     glLightfv(GL_LIGHT0, GL_POSITION, light_position);
     glEnable(GL_LIGHTING);
@@ -528,9 +525,9 @@ int main( int argc, char ** argv )
     glutInitWindowSize( 1350, 800 );
     glutInitWindowPosition( 0, 0 );
     glutCreateWindow( "Mirror" );
-    
+
     init();
-    
+
     glutIdleFunc( display );
     glutDisplayFunc( display );
     glutReshapeFunc( reshape );
